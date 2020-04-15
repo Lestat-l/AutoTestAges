@@ -1,0 +1,24 @@
+name: Run build and test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  buildAndTest:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@master
+      
+    - uses: actions/setup-java@master
+      with:
+          java-version: 1.8
+      
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+      
+    - name: Maven Verify
+      run: mvn -B verify
